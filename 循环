@@ -1,0 +1,28 @@
+一个while循环语句：
+#计算一个数，该数是加1可以使结果以有限精度大于1的最小数值
+clear
+num=0;
+eps=1;
+while (eps+1)>1%加括号增加可读性
+    eps=eps/4;
+    num=num+1;
+end
+num;%这里的num应该多计了一次
+eps=eps*4;%只有在以2以及2的倍数计算时才能求出这个数，该数是加1可以使结果以有限精度大于1的最小数值
+
+另一个循环语句：
+clear,clc
+num=input('请输入一个数');
+sum=0;
+time=0;
+while num~=0
+    sum=sum+num;
+    time=time+1;
+    num=input('请输入一个数');
+end
+if (time>0)%判断一下，避免被除数为0
+    sum
+    average=sum/time
+end
+
+因为while没有限制循环次数，如果逻辑判断语句不当，可能会陷入死循环，指导MATLAB内存溢出
