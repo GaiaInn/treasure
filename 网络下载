@@ -1,0 +1,28 @@
+从网络下载视频：
+clc,clear;
+num = 8005:8602;
+URLs = cell(size(num));%size函数返回矩阵行、列的维数,cell使其生成一个元胞，元胞中是（行数*列数）的空数组
+folder_filenames = cell(size(num));
+filenames = cell(size(num));
+for idx  = 1:length(num)
+    URLs{idx} = sprintf('https://www.solezy.me/20190316/49i1Juf8/1000kb/hls/IPj6819%d.ts',num(idx));
+    %sprintf函数用来拼合一个包含其他变量的字符串
+    filenames{idx} = sprintf('%d.ts',num(idx));%num(idx)的意思是，在向量num中第idx个数
+end
+tic;
+parfor idx = 1:length(num)
+    fprintf(1,'正在下载%s...\n',filenames{idx});
+    [f, status] = urlwrite(URLs{idx},filenames{idx});
+    %函数urlwrite把链接的文件存入该文件名下，两个变量都是字符串型
+    %matlab不推荐用urlwrite,推荐使用websave，有的文件用urlwrite下不了，可用websave总是出错
+    %folder_filenames{idx} = websave(filenames{idx},URLs{idx});
+    if status == 1%该变量返回1，操作成功，否则就是失败
+        fprintf(1,'%s成功下载！\n',filenames{idx});
+    else
+        fprintf(1,'%s下载失败！\n',filenames{idx});
+    end
+    
+end
+etime = toc;
+fprintf('总下载文件数：%d，总耗时：%fs\n',length(num),etime);
+
