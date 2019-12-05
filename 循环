@@ -26,3 +26,20 @@ if (time>0)%判断一下，避免被除数为0
 end
 
 因为while没有限制循环次数，如果逻辑判断语句不当，可能会陷入死循环，指导MATLAB内存溢出
+
+parfor使多个循环并行执行，直接在循环中把for替代为parfor即可，但是不知道怎么结束后“清空工作区然后释放workers”
+
+一个计算pi的方程：
+function [pi_result]=normal_pi(num,number)%函数里分别是步长和起始数
+format long
+N=100000;
+s=1/N;
+sum=0;
+for i=number:num:N
+    result(i)=(i-.5)/N;
+    sum=sum+4/(1+result(i)*result(i));
+end
+pi_result=sum/N;%函数末尾应当返回结果，结果名字对应函数上面的
+%要想输出为pi，函数初始num和number赋值均需为1
+end
+
