@@ -1,0 +1,42 @@
+[x,fval,exitflag,output]=fminbnd('(x^3+cos(x)+x*log(x))/exp(x)',0,1);
+%fminbnd(function,x1,x2,options)在范围x1，x2内查找一元函数function的最小值
+%（x，fval）是最小值点
+%exitflag为终止迭代的条件，返回值>0表明函数收敛于x，<0表明不收敛于x，=0表明超过函数估计值或迭代的最大次数
+%output是一个结构体数组，返回函数求解信息参数output.iterations 表示迭代次数，
+%output.funccount 表示函数赋值次数，output.algorithm 表示所使用的算法。
+%options为指定优化参数选项,按该结构的优化参数计算最小值，可以通过optimset函数来设置
+%e的x次方是exp(x)而不是exp^x
+opt=optimset('TolX',1.0e-7);%参数TolX规定自变量的精度
+%opt.TolX=1.0e-7;不知道这样写可不可以
+format long
+%format不是用于控制运算精度的，它只能控制结果显示类型，short是.0000，long是小数点后15位
+[x,fval,exitflag,output]=fminbnd('(x^3+cos(x)+x*log(x))/exp(x)',0,1,opt)
+%ctrl+R/T多行注释和多行取消注释
+x = fminsearch(fun,x0)
+%求多元函数的最小值点，返回的可选参数与fminbnd相同
+%x0 为初始点组成的向量，fun 为目标函数的表达式字符串或MATLAB 自定义函数的函数柄。
+%fminsearch 采用单纯形搜寻法，由于不需要计算梯度，因此对函数的质量要求不高，因此fminsearch 函数的运算速度很快，常见的函数都能立即求出极小值。
+%其中fun为字符串型的函数表达式，若代码很多，可将表达式存入函数的匿名文件，然后用@fun调用。
+[x,fval,exitflag,output,grad,hessian]=fminunc('x(1)+x(2)*x(3)',[1,2,3])
+%fminunc和fminsearch近似，当函数维数大于2，或函数高度不连续时，用前者效果较好
+%fmincon用来解决有约束的多元函数问题，具体请doc
+[x,fval,exitflag,output,lambda,grad,hessian]=fmincon(fun,x0,A,b,Aeq,beq,lb,ub,mycon);
+%lambda 是Lagrange 乘子，它体现哪一个约束有效。grad 表示目标函数在x 处的梯度；hessian 表示目标函数在x 处的Hessiab 值。
+%mycon是对非线性式子的约束
+%——————一个例子
+fun='x(1)^2+x(2)^2-x(1)*x(2)-2*x(1)-5*x(2)';
+x0=[0,1];
+A=[-2,3];b=6;%线性不等式约束-2x1++3x2<=6
+Aeq=[];beq=[];%Aeq=[7,9];beq=0;%线性等式约束7x1+9x2=0
+lb=[];ub=[];%lb=[2];ub=[8];%函数上下界
+%c(x)=(x(1)-1)^2-x(2);ceq(x)=x(1)*x(2)-7;mycon(x)=[c(x),ceq(x)];这种写法不行
+%对非线性不等式c和非线性等式的约束存入函数文件mycon，然后调用
+[x,fval,exitflag,output,lambda,grad,hessian]=fmincon(fun,x0,A,b,Aeq,beq,lb,ub,@mycon);
+%↓mucon的m文件内容
+function [c,ceq]=mycon(x)
+c=(x(1)-1)^2-x(2);
+ceq=[];
+end
+
+
+
