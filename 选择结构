@@ -1,0 +1,68 @@
+每个选择结构都有end，不要忘记
+
+###if-elseif-else选择结构
+function u=FindPrime(m,n)
+%在区间（m，n）上寻找所有素数
+%使用if选择结构
+%函数要有返回值，返回值也要在函数内定义
+u=[];
+if nargin==0%输入数的个数
+    m=2;n=100;%无输入的默认赋值
+elseif nargin==1
+    n=m;%若只有一个数的输入，默认赋给第一个变量，所以要进行转移
+    m=2;
+%elseif nargin==2
+else
+    if m>n
+        a=m;
+        m=n;
+        n=a;
+    end
+% else
+%     disp('输入变量超出判断维度')    
+%不需要对输入变量超出2进行判断，因为函数已经限制了2个输入值，超出会自动提示出错
+end
+for i=m:n
+    if isprime(i)%判断是否是素数的函数，是素数，返回1
+        u=[u,i];
+    end
+end  
+end
+%——————————
+以上判断的向量化解决方法是
+A=2：100
+A(isprim(A))
+%向量化运算效率高于使用选择结构和循环！！！
+
+###switch-case-(otherwise)选择结构
+——对switch的指定对象，若每个case都不匹配且没有otherwise，这个选择结构就不会被执行
+price=input('请输入价格');
+% switch price
+%     case price<200
+%上面这个语句不对，因为price<200是逻辑表达式，只返回1或0，一定小于switch指定的price
+%————第一种写法————
+% switch fix(price/100)%对价格取整，无限转有限
+%     case {0,1}%然后比对匹配
+%————第二种写法————
+switch 1
+    %这个选择结构也有end
+    case price<200
+        rate=0;
+        %我本来想写成，price=price,自己反思！
+    case price>=200&price<500
+        rate=0.03;
+    case price>=500&price<1000
+        rate=0.05;
+    case price>=1000&price<2500
+        rate=0.08;
+    case price>=5000
+        rate=0.14;
+    otherwise
+        rate=0.1;
+end
+price=price*(1-rate);
+
+###try-catch语句
+——用于捕捉错误，若try语句无误，catch不执行，若try有误，中止执行try，执行catch语句
+        
+        
