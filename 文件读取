@@ -1,0 +1,33 @@
+%该脚本用于将某一路径下某一类型的文件筛选出来并读取其中的数据
+path='C:\Users\asus\Documents\MATLAB';
+file=dir(path);%返回格式为结构体的变量
+%下面的语句是为了把非文件夹类型的文件筛选出来，存入变量，但是运行不了
+% s=length(file)-sum(flie.isdir);
+% name=zeros(1,s);
+% a=1;
+% for i=1:length(file)
+%    while ~file(i).isdir 
+%        name(a)=file(i).name;
+%        a=a+1;
+%    end
+% end
+f_name={file(~[file.isdir]).name};
+filet={};
+num=1;
+for i=1:length(f_name)
+    [p,fname,ext]=fileparts(f_name{i});
+    j=1;
+   while  any(strcmp(ext,{'.xls','.xlsx'}))
+   %strcmp比较两个字符串，若相同，返回1，否则返回0
+   %if strcmp(ext,{'.xls','.xlsx'})==1
+       %filet={filet;[path,filesep,f_name{i}]};
+       filet{num}=[path,filesep,f_name{i}];
+       num=num+1;
+       j=0;
+   end
+end
+for j=1:length(filet)
+    [data{j},txt{j}]=xlsread(file{j});
+end
+%我不知道为什么，但上面这个程序会陷入死循环……
+%而且应该是while那里出错了，ext的问题吗
