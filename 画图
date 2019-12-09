@@ -4,9 +4,9 @@ plot(a,b,'r-o',a,c,'kp');
 %p表示点为星星式样；o表示点为圆圈;.表示点为圆点；*为原样；x为叉；+为原样--不咋好使
 %-表示连续线，--表示间断线；不写-意味着不画线
 %默认为淡蓝色；b-蓝色；k-黑色；w-白色;y-黄色；g-绿色；r-红色；c-亮青色；m-锰紫色；
-xlabel('x');
-ylabel('sin(x)');
-title('二维图');
+xlabel('x');%这是x轴注解
+ylabel('sin(x)');%这是y轴注解
+title('二维图');%这是图的标题
 legend('y=sin(x)','y=cos(x)');%加图例
 grid on;%显示格线
 axis([0, 6, -1.2, 1.2]);%axis([xmin,xmax,ymin,ymax])函数来调整图轴的范围
