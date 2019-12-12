@@ -39,4 +39,31 @@ ceq=[];
 end
 
 
+%求线性规划问题在线性约束下的最小值
+%例2.5.7
+f=[-5;-4;-6];%目标函数为-5x1-4x2-6x3
+A=[1,-1,1;3,2,4;3,2,0];
+b=[20;42;30];
+lq=[0;0;0];
+[x,fval,exitflag,output,lambda]=linprog(f,A,b,[],[],lq);
+%-------
+%例2.5.8
+f=[0.05;0.15;0.1];
+Aeq=[1,2,3;1,1,1];
+beq=[2.5;1];
+lb =[0;0;0]; 
+[x,fval,exitflag,output,lambda]=linprog(f,[] ,[],Aeq,beq,lb);
+
+%-------
+%解决二次规划问题，例2.5.9
+H=[1,-1;-1,2];
+f=[-2;-6];
+A=[1,1;-1,2;2,1];
+b=[2;2;3];
+lb=[0;0];
+[x,fval,exitflag,output,lambda]=quadprog(H,f,A,b,[],[],lb)
+%和linprog相比，quadprog输入项里还可以有个初始值x0
+%——————
+
+
 
