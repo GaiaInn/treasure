@@ -1,0 +1,29 @@
+function y=Lagrange(x,xn,yn)
+%用拉格朗日法插值
+%这个函数的输入值被限制为单个变量
+%但是如果在乘除号之前加了点，好像就解决了这个问题
+basis_func=1;
+y=0;
+for j=1:length(xn)
+    for i=1:length(xn)
+        if i~=j
+            basis_func=basis_func.*(x-xn(i))./(xn(j)-xn(i));
+        end
+    end
+    y=y+yn(j).*basis_func;
+end
+%————
+function y=lagrange(x0,y0,x)
+ii=1:length(x0);
+y=zeros(size(x));
+for i=ii
+    ij=find(ii~=i);%返回列向量，非i元素的位置
+    y1=1;
+    for j=1:length(ij)
+        y1=y1.*(x-x0(ij(j)));
+        %向量和数可以加减，得出的结果还是向量，但是乘除必须点乘点除
+    end
+    y=y+y1*y0(i)/prod(x0(i)-x0(ij));
+    %prod返回一个行向量，每个元素都是（）内对应列向量累计相乘的结果
+end
+
