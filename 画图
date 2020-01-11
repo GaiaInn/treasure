@@ -12,3 +12,32 @@ grid on;%显示格线
 axis([0, 6, -1.2, 1.2]);%axis([xmin,xmax,ymin,ymax])函数来调整图轴的范围
 subplot(2,1,1);%横着画两个图，subplot(2,2,1)画4个图
 plot(a,b);%此外还有其他各种画图函数如feather(a,b)，compass(a,b)等，知乎收藏有
+
+bar(CR);%画柱状图
+set(gca,'XTickLabel',{'2015年7月31日','2015年10月30日','2015年12月31日','2016年2月29日'});%设置x轴的label
+
+%%画出图后MATLAB自己生成的代码
+function createfigure(ymatrix1)
+%CREATEFIGURE(YMATRIX1)
+%  YMATRIX1:  bar 矩阵数据
+%  由 MATLAB 于 11-Jan-2020 10:03:54 自动生成
+% 创建 figure
+figure1 = figure;
+% 创建 axes
+axes1 = axes('Parent',figure1);
+hold(axes1,'on');
+% 使用 bar 的矩阵输入创建多行
+bar1 = bar(ymatrix1,'Parent',axes1);
+set(bar1(4),'DisplayName','ΔCoVaR');
+set(bar1(3),'DisplayName','ΔCoCaVaR');
+set(bar1(2),'DisplayName','ΔQL-CoVaR');
+set(bar1(1),'DisplayName','ΔQL-CoCaVaR');
+box(axes1,'on');
+% 设置其余坐标轴属性
+set(axes1,'XTick',[1 2 3 4],'XTickLabel',...
+    {'2015年7月31日','2015年10月30日','2015年12月31日','2016年2月29日'});
+% 创建 legend
+legend1 = legend(axes1,'show');
+set(legend1,...
+    'Position',[0.716298904015878 0.749761711522532 0.19013683290275 0.172713721485783]);
+
